@@ -13,11 +13,11 @@ body {
     height: 60px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid brown;
     position: sticky;
     top: 0;
     background-color: white;
-
 }
 
 .header--title{
@@ -30,7 +30,6 @@ body {
 .header--img{
     height: 80%;
     object-fit: contain;
-    margin: auto 0;
 }
 
 .menu--container{
