@@ -123,7 +123,18 @@ const menuImages = [
       };
 
       const getDesktopActiveSectionId = () => {
-        if (!menuStack) return null;
+        if (!menuStack || sections.length === 0) return null;
+
+        const maxScroll = menuStack.scrollWidth - menuStack.clientWidth;
+        const edgeThreshold = 2;
+
+        if (menuStack.scrollLeft <= edgeThreshold) {
+          return sections[0].id;
+        }
+
+        if (menuStack.scrollLeft >= maxScroll - edgeThreshold) {
+          return sections[sections.length - 1].id;
+        }
 
         const stackRect = menuStack.getBoundingClientRect();
         const viewportCenter = stackRect.left + stackRect.width / 2;
@@ -243,9 +254,9 @@ const menuImages = [
 
       if (menuStack) {
         menuStack.addEventListener("scroll", scheduleUpdate, { passive: true });
+        menuStack.addEventListener("wheel", handleDesktopWheelScroll, { passive: false });
       }
 
-      window.addEventListener("wheel", handleDesktopWheelScroll, { passive: false });
       window.addEventListener("scroll", scheduleUpdate, { passive: true });
       window.addEventListener("resize", scheduleUpdate);
 
